@@ -1,5 +1,11 @@
-import { Link, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/server-runtime";
+import {
+  Link,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime";
+import { redirect } from "@remix-run/server-runtime";
 import { json } from "@remix-run/server-runtime";
 import { getDeckList } from "~/models/decks.server";
 
@@ -23,7 +29,10 @@ const EditDecksScreen = () => {
       <ul>
         {decks.map((deck) => (
           <li key={deck.slug}>
-            <Link to="/deck/edit" className="text-blue-500 underline">
+            <Link
+              to={`/deck/edit/${deck.slug}`}
+              className="text-blue-500 underline"
+            >
               {deck.slug}
             </Link>
           </li>

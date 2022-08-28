@@ -1,4 +1,20 @@
-const decks = [
+export interface Card {
+  deck: string;
+  title: string;
+  data: [];
+}
+
+export interface Deck {
+  id: string;
+  slug: string;
+  cards: {
+    deck: string;
+    title: string;
+    data: { label: string; score: number }[];
+  }[];
+}
+
+const decks: Deck[] = [
   {
     id: "123",
     slug: "tv-show",

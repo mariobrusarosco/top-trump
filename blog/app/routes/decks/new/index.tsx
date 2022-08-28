@@ -8,8 +8,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   const deckName = formData.get("deck-name");
 
-  console.log([deckName]);
-
   const errors = {
     deckName: deckName ? null : "Deck name is mandatory",
   };
