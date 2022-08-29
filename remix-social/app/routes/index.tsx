@@ -1,20 +1,21 @@
 import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import type { Post } from "~/services/post.server";
+import { getPosts } from "~/services/post.server";
 
-export const loader: LoaderFunction = () => {
-  return [
-    { title: "hello", body: "lorem ispum #1" },
-    { title: "world", body: "lorem ispum #2" },
-  ];
+type LoaderData = {
+  posts: Post[];
 };
 
-type Post = {
-  title: string;
-  body: string;
+export const loader: LoaderFunction = async () => {
+  const posts = await getPosts();
+
+  return json<LoaderData>({ posts });
 };
 
 export default function Index() {
-  const posts = useLoaderData<Post[]>();
+  const { posts } = useLoaderData<LoaderData>();
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
