@@ -8,6 +8,12 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import styles from "./styles/app-compiled.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Top Trump",
