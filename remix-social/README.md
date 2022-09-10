@@ -32,3 +32,29 @@ npm run dev
 Open up [http://localhost:3000](http://localhost:3000) and you should be ready to go!
 
 If you're used to using the `vercel dev` command provided by [Vercel CLI](https://vercel.com/cli) instead, you can also use that, but it's not needed.
+
+## Planet Scale
+
+### Log in
+
+```bash
+pscale auth login
+```
+
+### Start a branch
+
+```bash
+pscale branch create remix-social initial-setup
+```
+
+# Switch to a branch
+
+```bash
+pscale branch switch --database remix-social
+```
+
+### Push a prisma schema to PlanetScale
+
+```bash
+npx prisma db push
+```
