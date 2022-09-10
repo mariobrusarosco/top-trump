@@ -50,7 +50,7 @@ pscale branch create remix-social initial-setup
 # Switch to a branch
 
 ```bash
-pscale branch switch --database remix-social
+pscale branch switch {branch_name} --database {db_name}
 ```
 
 ### Push a prisma schema to PlanetScale
