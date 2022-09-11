@@ -7,9 +7,10 @@ import { PostForm } from "~/components/PostForm";
 import type { Post } from "~/services/post.server";
 import { getPosts, createPost } from "~/services/post.server";
 import { CreatePost } from "~/services/validation";
+import crypto from "crypto";
 
 type LoaderData = {
-  posts: Post[];
+  posts: Awaited<ReturnType<typeof getPosts>>;
 };
 
 export const loader: LoaderFunction = async () => {
@@ -57,7 +58,8 @@ export const action: ActionFunction = async ({ request }) => {
 
   await createPost({
     title: result?.data?.title ?? null,
-    body: result?.data?.body ?? null,
+    body: result?.data?.body,
+    authorId: crypto.randomUUID(),
   });
 
   return redirect("/");
@@ -79,7 +81,9 @@ export default function Index() {
       <ul>
         {posts?.map((post) => (
           <li key={post.title}>
-            <PostComponent header={post.title}>{post.body}</PostComponent>
+            <PostComponent header={post.title} authorName={post?.author?.email}>
+              {post.body}
+            </PostComponent>
           </li>
         ))}
       </ul>

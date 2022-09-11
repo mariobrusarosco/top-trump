@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef } from "react";
 
 export type Props = ComponentPropsWithoutRef<"div"> & {
   header?: string | null;
+  authorName?: string | null;
 };
 
 // OR, we don't need to reinvent the wheel and use:
