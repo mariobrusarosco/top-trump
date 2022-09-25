@@ -7,7 +7,6 @@ import { PostForm } from "~/components/PostForm";
 import type { Post } from "~/services/post.server";
 import { getPosts, createPost } from "~/services/post.server";
 import { CreatePost } from "~/services/validation";
-import crypto from "crypto";
 
 type LoaderData = {
   posts: Awaited<ReturnType<typeof getPosts>>;
@@ -59,7 +58,7 @@ export const action: ActionFunction = async ({ request }) => {
   await createPost({
     title: result?.data?.title ?? null,
     body: result?.data?.body,
-    authorId: crypto.randomUUID(),
+    authorId: Math.random().toString().slice(0, 8),
   });
 
   return redirect("/");
