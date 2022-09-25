@@ -16,3 +16,11 @@ export const userSignup = async (email: string, password: string) => {
     },
   });
 };
+
+export const checkIfUserExists = async (email: string) => {
+  return (
+    (await db.user.count({
+      where: { email },
+    })) > 0
+  );
+};

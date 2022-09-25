@@ -1,11 +1,7 @@
-import { Form, useTransition } from "@remix-run/react";
-import { Button } from "../Button";
+import { Form } from "@remix-run/react";
 import type { Props } from "./types";
 
-const UserForm = ({ error, fields, ...props }: Props) => {
-  const transition = useTransition();
-
-  console.log("UserForm", { transition });
+const UserForm = ({ error, fields, children, ...props }: Props) => {
   return (
     <Form className="flex flex-col" method="post" {...props}>
       <div className="mb-4 flex flex-col">
@@ -21,7 +17,9 @@ const UserForm = ({ error, fields, ...props }: Props) => {
           placeholder="john_doe@gmail.com"
           defaultValue={fields?.email}
         />
-        {error?.fieldErrors?.email && <p>{error.fieldErrors.email}</p>}
+        {error?.fieldErrors?.email && (
+          <p className="text-red-500">{error.fieldErrors.email}</p>
+        )}
       </div>
       <div className="mb-8 flex flex-col">
         <label htmlFor="password" className="mb-2 text-gray-600">
@@ -39,10 +37,10 @@ const UserForm = ({ error, fields, ...props }: Props) => {
           <p className="text-red-500">{error.fieldErrors.password}</p>
         )}
       </div>
+
+      {children}
+
       {error?.formError && <p className="text-red-500">{error?.formError}</p>}
-      <Button type="submit" dissabled={transition.state !== "idle"}>
-        {transition.state === "idle" ? "Login" : "Loging in..."}
-      </Button>
     </Form>
   );
 };
