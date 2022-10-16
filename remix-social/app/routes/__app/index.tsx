@@ -4,15 +4,17 @@ import { json } from "@remix-run/node";
 import { useActionData, useLoaderData } from "@remix-run/react";
 import { Post as PostComponent } from "~/components/Post";
 import { PostForm } from "~/components/PostForm";
-import type { Post } from "~/services/post.server";
-import { getPosts, PostSchema } from "~/services/post.server";
+import { authenticator } from "~/services/auth.server";
+import { createPost, getPosts, Post } from "~/services/post.server";
 import { PostSchema } from "~/services/validation";
 
 type LoaderData = {
   posts: Awaited<ReturnType<typeof getPosts>>;
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }) => {
+  await authenticator.isAuthenticated(request, { failureRedirect: "/login" });
+
   const posts = await getPosts();
 
   return json<LoaderData>({ posts });
@@ -33,6 +35,9 @@ type ActionData = {
 };
 
 export const action: ActionFunction = async ({ request }) => {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/login",
+  });
   const formData = await request.formData();
   const rawTitle = formData.get("title");
   const rawBody = formData.get("body");
@@ -55,10 +60,10 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  await PostSchema({
+  await createPost({
     title: result?.data?.title ?? null,
     body: result?.data?.body,
-    authorId: Math.random().toString().slice(0, 8),
+    authorId: user?.id || Math.random().toString().slice(0, 8),
   });
 
   return redirect("/");

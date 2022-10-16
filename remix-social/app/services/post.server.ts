@@ -5,7 +5,7 @@ export type { Post } from "@prisma/client";
 
 export const getPosts = () => db.post.findMany();
 
-export const PostSchema = ({
+export const createPost = ({
   title,
   body,
   authorId,
