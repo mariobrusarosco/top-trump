@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+model Post {
+  id        String @id @default(uuid())
+  title     String?
+  body      String
+  author    User? @relation(fields: [authorId], references: [id])
+  authorId  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id                String @id @default(uuid())
+  name              String
+  email             String @unique
+  hashedPassword    String
+  role              String @default("USER")
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  posts             Post[]
+}
