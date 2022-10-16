@@ -5,8 +5,8 @@ import { useActionData, useLoaderData } from "@remix-run/react";
 import { Post as PostComponent } from "~/components/Post";
 import { PostForm } from "~/components/PostForm";
 import type { Post } from "~/services/post.server";
-import { getPosts, createPost } from "~/services/post.server";
-import { CreatePost } from "~/services/validation";
+import { getPosts, PostSchema } from "~/services/post.server";
+import { PostSchema } from "~/services/validation";
 
 type LoaderData = {
   posts: Awaited<ReturnType<typeof getPosts>>;
@@ -37,7 +37,7 @@ export const action: ActionFunction = async ({ request }) => {
   const rawTitle = formData.get("title");
   const rawBody = formData.get("body");
 
-  const result = CreatePost.safeParse({
+  const result = PostSchema.safeParse({
     title: rawTitle,
     body: rawBody,
   });
@@ -55,7 +55,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  await createPost({
+  await PostSchema({
     title: result?.data?.title ?? null,
     body: result?.data?.body,
     authorId: Math.random().toString().slice(0, 8),

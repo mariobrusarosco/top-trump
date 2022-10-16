@@ -33,12 +33,24 @@ Open up [http://localhost:3000](http://localhost:3000) and you should be ready t
 
 If you're used to using the `vercel dev` command provided by [Vercel CLI](https://vercel.com/cli) instead, you can also use that, but it's not needed.
 
+Check your local DB
+
+```sh
+npx prisma studio
+```
+
 ## Planet Scale
 
 ### Log in
 
 ```bash
 pscale auth login
+```
+
+# Connect to a branch
+
+```bash
+pscale connect {db_name} {branch_name}
 ```
 
 ### Start a branch
@@ -53,14 +65,34 @@ pscale branch create remix-social initial-setup
 pscale branch switch {branch_name} --database {db_name}
 ```
 
-# Connect to a branch
-
-```bash
-pscale connect {db_name} {branch_name}
-```
-
 ### Push a prisma schema to PlanetScale
 
 ```bash
 npx prisma db push
+```
+
+## AUTHENTICATION
+
+- remix-auth
+- remix-auth-form
+
+First we'll need ton fullfill the `Authenticator`class requirements.
+
+1. We need to pass a **User schema**
+2. We need to implement three functions: `getSession`, `commitSessionand`, `destroySession`.
+
+```ts
+export type SessionUser = Omit<User, "hashedPassword">;
+
+export const authenticator = new Authenticator<SessionUser>({
+  getSession,
+  commitSession,
+  destroySession,
+});
+```
+
+This project will use _HTTP Cookies_. `@remix-run/node` has a Cookies Strategy:
+
+```ts
+import { createCookieSessionStorage } from "@remix-run/node";
 ```

@@ -4,8 +4,8 @@ import { redirect } from "@remix-run/node";
 import { useActionData, useTransition } from "@remix-run/react";
 import { Button } from "~/components/Button";
 import { UserForm } from "~/components/UserForm";
-import { checkIfUserExists, userSignup } from "~/services/auth.services";
-import { CreateSignup } from "~/services/validation";
+import { checkIfUserExists, userSignup } from "~/services/user.server";
+import { SignupSchema } from "~/services/validation";
 
 export function badRequest<TActionData>(data: TActionData, status = 400) {
   return json<TActionData>(data, { status });
@@ -39,19 +39,21 @@ export const action: ActionFunction = async ({ request }) => {
 
   const fields = { email: rawEmail, password: rawPassword };
 
-  const result = CreateSignup.safeParse({
+  const result = SignupSchema.safeParse({
     email: rawEmail,
     password: rawPassword,
   });
 
   if (!result.success) {
-    console.warn("[UserForm] - Submission result", result);
+    console.log("[UserForm] - Submission result", result);
     const error = result.error.flatten();
 
     return badRequest<ActionData>({ fields, error });
   }
 
   const userExists = await checkIfUserExists(fields.email);
+
+  console.log("[SIGN UP] - userExists", userExists);
 
   if (userExists) {
     return badRequest<ActionData>({
@@ -81,7 +83,7 @@ const SignUpPage = () => {
       <h1 className="text-xl text-slate-800 mb-8">Sign Up</h1>
       <UserForm error={error} fields={fields}>
         <Button type="submit" dissabled={transition.state !== "idle"}>
-          {transition.state === "idle" ? "Login" : "Logging in..."}
+          {transition.state === "idle" ? "Sign up" : "Signing up..."}
         </Button>
       </UserForm>
     </div>
