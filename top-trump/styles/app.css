@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* 
+    <div class="lg:content-auto">
+         <!-- ... -->
+    </div
+*/
+
+/* Custom Class */
+@layer utilities {
+    .content-auto {
+        content-visibility: auto;
+    }
+}
+
