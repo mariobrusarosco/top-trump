@@ -17,7 +17,6 @@ export const loader: LoaderFunction = async () => {
 export default function Admin() {
   const { posts } = useLoaderData() as LoaderData;
 
-  await new Promise((res) => setTimeout(res, 3000))
 
   return (
     <div className="mx-auto max-w-4xl">
