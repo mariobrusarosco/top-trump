@@ -1,37 +1,47 @@
+import { Link, Outlet } from "@remix-run/react";
 import Layout from "~/components/Layout/Layout";
 
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <Layout>
-        <h1 className="bg-red text-3xl font-bold  variant-test:text-teal-300">Top Trump</h1>
-        <h1 className="bg-red text-3xl font-bold underline variant-test:text-teal-300">Game</h1>
-
-        <ul>
-          <li>
-            <a
-              target="_blank"
-              href="https://remix.run/tutorials/blog"
-              rel="noreferrer"
-            >
-              15m Quickstart Blog Tutorial!
-            </a>
-          </li>
-          <li>
-            <a
-              target="_blank"
-              href="https://remix.run/tutorials/jokes"
-              rel="noreferrer"
-            >
-              Deep Dive Jokes App Tutorial
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-              Remix Docs
-            </a>
-          </li>
-        </ul>
+        <header>
+          <ul>
+          <li>              
+            <Link
+              to="/"
+              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+              >
+              Home
+              </Link>
+            </li>
+            <li>              
+            <Link
+              to="/signin"
+              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+              >
+              Sign in
+              </Link>
+            </li>
+            <li>              
+            <Link
+              to="/signup"
+              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+              >
+              Sign up
+              </Link>
+            </li>
+            <li>              
+            <Link
+              to="/dashboard"
+              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+              >
+              Dashboard
+              </Link>
+            </li>
+          </ul>
+        </header>
+        <Outlet />
       </Layout>
     </div>
   );
