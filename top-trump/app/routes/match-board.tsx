@@ -1,22 +1,16 @@
+import { useContext } from "react"
+import Board from "~/components/Board"
 import Card from "~/components/Card"
 import Layout from "~/components/Layout/Layout"
-import { io } from 'socket.io-client'
- 
-const URL = 'http://localhost:8000'
-const socket = io(URL, {
-    path: '/socket.io',
-    reconnection: false
-})
+import SocketContextComponent from "~/contexts/Socket/Component"
+import SocketContext from "~/contexts/Socket/Context"
 
 const MatchBoard = () => {
-    console.log({ socket})
-    return <section className="match-board">
-        <Layout>
-            <h1>Turn | Liz</h1>
-            <div className="border-2 border-red-600"></div>
-            <Card />
-        </Layout>
-    </section>
+    return (
+        <SocketContextComponent>
+            <Board />
+        </SocketContextComponent>
+    );
 }
 
 export default MatchBoard
