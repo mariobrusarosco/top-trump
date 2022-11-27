@@ -2,7 +2,8 @@ import { useContext } from "react";
 import SocketContext from "~/contexts/Socket/Context";
 
 const Board = () => {
-    const { SocketState} = useContext(SocketContext)
+    const { SocketState } = useContext(SocketContext)
+    
 
     return (
         <div>
