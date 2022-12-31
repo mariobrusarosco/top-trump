@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* 
     <div class="lg:content-auto">
          <!-- ... -->
@@ -11,8 +10,11 @@
 
 /* Custom Class */
 @layer utilities {
-    .content-auto {
-        content-visibility: auto;
-    }
+  .content-auto {
+    content-visibility: auto;
+  }
 }
 
+* {
+  color: tomato !important;
+}

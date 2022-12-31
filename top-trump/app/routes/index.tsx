@@ -1,5 +1,12 @@
+import type { LinksFunction } from "@remix-run/node";
 import { Link, Outlet } from "@remix-run/react";
 import Layout from "~/components/Layout/Layout";
+
+import stylesUrl from "~/styles/app.css";
+
+export const links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: stylesUrl }];
+};
 
 export default function Index() {
   return (
@@ -7,36 +14,36 @@ export default function Index() {
       <Layout>
         <header>
           <ul>
-          <li>              
-            <Link
-              to="/"
-              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+            <li>
+              <Link
+                to="/"
+                className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
               >
-              Home
+                Home
               </Link>
             </li>
-            <li>              
-            <Link
-              to="/signin"
-              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+            <li>
+              <Link
+                to="/signin"
+                className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
               >
-              Sign in
+                Sign in
               </Link>
             </li>
-            <li>              
-            <Link
-              to="/signup"
-              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+            <li>
+              <Link
+                to="/signup"
+                className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
               >
-              Sign up
+                Sign up
               </Link>
             </li>
-            <li>              
-            <Link
-              to="/dashboard"
-              className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+            <li>
+              <Link
+                to="/dashboard"
+                className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
               >
-              Dashboard
+                Dashboard
               </Link>
             </li>
           </ul>
