@@ -10,3 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Deck{
+  id            String @id @default(uuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  label         String
+  image         String
+}
