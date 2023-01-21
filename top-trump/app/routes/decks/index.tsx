@@ -1,13 +1,33 @@
-import { Link } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import Card from "~/components/Card";
 import Layout from "~/components/Layout/Layout";
+import { db } from "~/utils/db.server";
+
+export const loader = async () => {
+  return json({
+    decks: await db.deck.findMany({
+      select: { id: true, image: true, label: true },
+    }),
+  });
+};
 
 export default function Decks() {
+  const { decks } = useLoaderData<typeof loader>();
+
+  console.log({ decks });
+
   return (
     <Layout>
       <h1 className="bg-red text-3xl font-bold  variant-test:text-teal-300">
         Decks
       </h1>
+
+      {decks.map((deck) => (
+        <li key={deck.id}>
+          <Link to={deck.id}>{deck.label}</Link>
+        </li>
+      ))}
 
       <Link
         to="/decks/edit"
