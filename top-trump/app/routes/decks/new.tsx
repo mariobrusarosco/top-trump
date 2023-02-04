@@ -9,6 +9,8 @@ import { db } from "~/utils/db.server";
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
 
+  console.log({ form });
+
   const label = form.get("label") as string;
 
   if (!label) {
@@ -22,7 +24,7 @@ export const action = async ({ request }: ActionArgs) => {
   });
   console.warn(newDeck);
 
-  return redirect(`/decks`);
+  return redirect(`/decks/${newDeck?.id}`);
 };
 
 export default function NewDeck(props) {
@@ -32,13 +34,18 @@ export default function NewDeck(props) {
         New Deck
       </h1>
 
-      <form action="post">
+      <form method="post">
         <div>
-          <label htmlFor="label">label</label>
-          <input id="label" type="text" />
+          <label>
+            Name: <input type="text" name="label" />
+          </label>
         </div>
 
-        <button type="submit">create new deck</button>
+        <div>
+          <button type="submit" className="button">
+            Add
+          </button>
+        </div>
       </form>
     </Layout>
   );
