@@ -19,7 +19,9 @@ export const action = async ({ request }: ActionArgs) => {
   };
   const fields = { label, image: "" };
 
-  if (Object.values(fieldErrors).some(Boolean)) {
+  const formHasError = Object.values(fieldErrors).some(Boolean);
+
+  if (formHasError) {
     return badRequest({
       fieldErrors,
       fields,
@@ -27,10 +29,10 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
+  // This is the example of a Mutation: Post
   const newDeck = await db.deck.create({
     data: fields,
   });
-  console.warn(newDeck);
 
   return redirect(`/decks/${newDeck?.id}`);
 };
