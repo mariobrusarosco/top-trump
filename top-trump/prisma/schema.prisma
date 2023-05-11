@@ -16,4 +16,16 @@ model Deck{
   updatedAt     DateTime @updatedAt
   label         String
   image         String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+}
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  username     String   @unique
+  passwordHash String
+  decks        Deck[]
 }
