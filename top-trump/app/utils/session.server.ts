@@ -7,6 +7,19 @@ type LoginForm = {
   username: string;
 };
 
+function getUserSession(request: Request) {
+  return storage.getSession(request.headers.get("Cookie"));
+}
+
+export async function logout(request: Request) {
+  const session = await getUserSession(request);
+  return redirect("/signin", {
+    headers: {
+      "Set-Cookie": await storage.destroySession(session),
+    },
+  });
+}
+
 export async function register({ password, username }: LoginForm) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({

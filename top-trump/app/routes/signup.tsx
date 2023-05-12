@@ -128,16 +128,6 @@ export default function SignUp() {
             </button>
           </form>
         </div>
-        <div className="links">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/decks">Decks</Link>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

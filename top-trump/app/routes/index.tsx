@@ -46,10 +46,18 @@ export default function Index() {
                 Dashboard
               </Link>
             </li>
+
+            <li>
+              <form action="/logout" method="post">
+                <button type="submit" className="button">
+                  Logout
+                </button>
+              </form>
+            </li>
           </ul>
         </header>
-        <Outlet />
       </Layout>
+      <Outlet />
     </div>
   );
 }
