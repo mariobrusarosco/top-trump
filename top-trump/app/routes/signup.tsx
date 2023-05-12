@@ -6,11 +6,7 @@ import Layout from "~/components/Layout/Layout";
 // import stylesUrl from "~/styles/signin.css";
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
-import { register } from "~/utils/session.server";
-
-// export const links: LinksFunction = () => [
-//   { rel: "stylesheet", href: stylesUrl },
-// ];
+import { createUserSession, register } from "~/utils/session.server";
 
 export const nullableValidation = (content: string) => {
   return content?.length <= 0 && "field must exists";
@@ -55,9 +51,7 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
-  console.log(newUser);
-
-  return redirect("/dashboard");
+  return createUserSession(newUser.id, "/dashboard");
 };
 export default function SignUp() {
   const actionData = useActionData<typeof action>();
