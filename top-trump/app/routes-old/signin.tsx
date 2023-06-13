@@ -12,12 +12,12 @@ export const nullableValidation = (content: string) => {
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
-  const username = form.get("username") as string;
+  const email = form.get("email") as string;
   const password = form.get("password") as string;
 
-  const fields = { username, password };
+  const fields = { email, password };
   const fieldErrors = {
-    username: nullableValidation(username),
+    email: nullableValidation(email),
     password: nullableValidation(password),
   };
 
@@ -30,12 +30,12 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
-  const user = await login({ username, password });
+  const user = await login({ email, password });
   if (!user) {
     return badRequest({
       fieldErrors: null,
       fields,
-      formError: "Username/Password combination is incorrect",
+      formError: "email/Password combination is incorrect",
     });
   }
 
@@ -59,24 +59,20 @@ export default function SignIn() {
             /> */}
 
         <div>
-          <label htmlFor="username-input">Username</label>
+          <label htmlFor="email-input">email</label>
           <input
             type="text"
-            id="username-input"
-            name="username"
-            defaultValue={actionData?.fields?.username}
-            aria-invalid={Boolean(actionData?.fieldErrors?.username)}
+            id="email-input"
+            name="email"
+            defaultValue={actionData?.fields?.email}
+            aria-invalid={Boolean(actionData?.fieldErrors?.email)}
             aria-errormessage={
-              actionData?.fieldErrors?.username ? "username-error" : undefined
+              actionData?.fieldErrors?.email ? "email-error" : undefined
             }
           />
-          {actionData?.fieldErrors?.username ? (
-            <p
-              className="form-validation-error"
-              role="alert"
-              id="username-error"
-            >
-              {actionData.fieldErrors.username}
+          {actionData?.fieldErrors?.email ? (
+            <p className="form-validation-error" role="alert" id="email-error">
+              {actionData.fieldErrors.email}
             </p>
           ) : null}
         </div>

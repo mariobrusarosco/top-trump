@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import Card from "~/components/Card";
 import Layout from "~/components/Layout/Layout";
 import { db } from "~/utils/db.server";
@@ -12,6 +12,10 @@ export const loader = async () => {
   });
 };
 
+export function ErrorBoundary() {
+  return <div className="error-container">Error on Decks root route!</div>;
+}
+
 export default function Decks() {
   const { decks } = useLoaderData<typeof loader>();
 
@@ -20,7 +24,7 @@ export default function Decks() {
   return (
     <Layout>
       <h1 className="bg-red text-3xl font-bold  variant-test:text-teal-300">
-        Decks
+        Decks - Root
       </h1>
 
       {decks.map((deck) => (
@@ -42,6 +46,8 @@ export default function Decks() {
       >
         New
       </Link>
+
+      <Outlet />
     </Layout>
   );
 }

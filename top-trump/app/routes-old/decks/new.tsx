@@ -7,6 +7,10 @@ import Layout from "~/components/Layout/Layout";
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
 
+export function ErrorBoundary() {
+  return <div className="error-container">Error on Decks New route!</div>;
+}
+
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
 
