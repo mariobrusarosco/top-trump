@@ -4,28 +4,54 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 type LoginForm = {
   password: string;
-  username: string;
+  email: string;
 };
 
 function getUserSession(request: Request) {
   return storage.getSession(request.headers.get("Cookie"));
 }
 
+export async function getUserId(request: Request) {
+  const session = await getUserSession(request);
+  const userId = session.get("userId");
+  if (!userId || typeof userId !== "string") {
+    return null;
+  }
+  return userId;
+}
+
+export async function getUser(request: Request) {
+  const userId = await getUserId(request);
+  if (typeof userId !== "string") {
+    return null;
+  }
+
+  try {
+    const user = await db.user.findUnique({
+      select: { id: true, username: true },
+      where: { id: userId },
+    });
+    return user;
+  } catch {
+    throw logout(request);
+  }
+}
+
 export async function logout(request: Request) {
   const session = await getUserSession(request);
-  return redirect("/signin", {
+  return redirect("/sign-in", {
     headers: {
       "Set-Cookie": await storage.destroySession(session),
     },
   });
 }
 
-export async function register({ password, username }: LoginForm) {
+export async function register({ password, email }: LoginForm) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
-    data: { passwordHash, username },
+    data: { passwordHash, email, username: "" },
   });
-  return { id: user.id, username };
+  return { id: user.id, email };
 }
 
 const sessionSecret = process.env.SESSION_SECRET;
@@ -56,9 +82,9 @@ export async function createUserSession(userId: string, redirectTo: string) {
   });
 }
 
-export async function login({ password, username }: LoginForm) {
+export async function login({ password, email }: LoginForm) {
   const user = await db.user.findUnique({
-    where: { username },
+    where: { email },
   });
   if (!user) {
     return null;
@@ -69,5 +95,5 @@ export async function login({ password, username }: LoginForm) {
     return null;
   }
 
-  return { id: user.id, username };
+  return { id: user.id, email };
 }

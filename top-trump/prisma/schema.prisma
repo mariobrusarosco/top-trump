@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Deck{
@@ -16,8 +17,8 @@ model Deck{
   updatedAt     DateTime @updatedAt
   label         String
   image         String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 }
 
@@ -25,7 +26,8 @@ model User {
   id           String   @id @default(uuid())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  username     String   @unique
+  email        String   @unique
+  username     String   
   passwordHash String
   decks        Deck[]
 }
