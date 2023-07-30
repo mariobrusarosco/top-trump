@@ -9,6 +9,7 @@ import type { JestConfigWithTsJest } from "ts-jest";
 const jestConfig: JestConfigWithTsJest = {
   preset: "ts-jest/presets/js-with-ts-esm",
   rootDir: "../../../src",
+  testMatch: ["**/*.test.ts?(x)", "**/__fixtures__/*.test.ts?(x)"],
 };
 
 export default jestConfig;
