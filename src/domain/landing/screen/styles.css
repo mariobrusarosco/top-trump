@@ -1,0 +1,22 @@
+.top-section {
+  height: 100vh;
+  display: flex;
+  position: sticky;
+  top: 0;
+
+  /* .left,
+  .right {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  */
+  .right {
+    background: tomato;
+  }
+}
+
+.full-section {
+  height: 500px;
+  background-color: tan;
+}
