@@ -4,8 +4,9 @@ import { render } from "@testing-library/react";
 describe("Button", () => {
   describe("when rendering", () => {
     it("renders the text", () => {
-      render(<App />);
-      expect(false).toBe(true);
+      const { getByText } = render(<App />);
+
+      expect(getByText("count is 0")).toBeInTheDocument();
     });
   });
 });
