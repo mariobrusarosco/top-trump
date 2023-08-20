@@ -12,6 +12,9 @@ const jestConfig: JestConfigWithTsJest = {
   testMatch: ["**/*.test.ts?(x)", "**/__fixtures__/*.test.ts?(x)"],
   setupFilesAfterEnv: ["<rootDir>/config/tests/jest/test-env-setup.ts"],
   testEnvironment: "jsdom",
+  globals: {
+    EXAMPLE_ONE: "hello_world_one",
+  },
 };
 
 export default jestConfig;
