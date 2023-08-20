@@ -15,6 +15,10 @@ const jestConfig: JestConfigWithTsJest = {
   globals: {
     EXAMPLE_ONE: "hello_world_one",
   },
+  moduleNameMapper: {
+    "^.+\\.svg$": "jest-svg-transformer",
+    "^.+\\.(css|less|scss)$": "identity-obj-proxy",
+  },
 };
 
 export default jestConfig;
