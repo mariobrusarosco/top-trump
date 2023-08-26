@@ -1,8 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --scroll: 0;
+  --translateNoProportion: 0;
+  --PrimaryBase: #EC185D;
+  --NeutralWhite: #FFFFFF;
+  --SecondaryBase: #254441;
+  --BaseLight: #FF6F59;
+  --PrimaryDark: #BB2253;
+}
+
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
+ 
 }
 
 .logo {
@@ -39,4 +54,109 @@
 
 .read-the-docs {
   color: #888;
+}
+
+
+
+.section {
+  height: 100vh;
+  width: 100vw;
+}
+
+.section-home {
+  position: sticky;
+  top: 0;
+  background-color: var(--PrimaryDark);
+  translate: 0 calc(-1 * var(--scroll));
+  padding: 40px 100px 0;
+
+  & h1 {
+    text-align: right;
+    font-size: 80px;
+    color: var(--NeutralWhite);
+  }
+
+  & .left-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    margin-top: 50px;
+  }
+
+  & .box {
+    display: flex;
+    gap: 6px;
+    max-width: 350px;
+    color: var(--NeutralWhite);
+
+  }
+
+  & .right-intro {
+    max-width: 360px;
+    margin-left: auto;
+  }
+}
+
+
+
+.section-your-turn {
+  background-color: var(--PrimaryBase);
+  padding-top: 150px;
+}
+
+
+.section-others-turn {
+  background-color: var(--BaseLight);
+  padding-top: 150px;
+}
+
+.section-results {
+  background-color: var(--SecondaryBase);
+  padding-top: 150px;
+}
+
+
+.images {
+  & img {
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+    width: 90vw;
+    transform: translate(0%, 100%);
+    /* left: 50%; */
+    /* right: 0; */
+    transition: translate 200ms ease-in-out;
+
+    /* --value: '10vw' */
+
+
+  }
+
+  .show {
+    /* width: calc(-20vw + var(--firstImage)) */
+    transform: translate(-20%, 55%) scale(0.5);
+  }
+}
+
+
+
+
+
+.top-section {
+  position: sticky;
+  top: 0;
+  /* (oldVal - oldMin) * newRange / oldRange + newMin */
+  /* translate: 0 calc(-1% * (max(var(--scrollValue), 25) - 25) * 100 / 75); */
+  /* --background-opacity: calc(100% - 1% * min(var(--scroll), 30) * 100 / 30); */
+}
+
+.first-main-section {
+  padding-top: 10vh;
+}
+
+
+
+.first-main-section {
+  padding-top: 10vh;
 }
