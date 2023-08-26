@@ -10,6 +10,7 @@ const jestConfig: JestConfigWithTsJest = {
   preset: "ts-jest/presets/js-with-ts-esm",
   rootDir: "../../..",
   testMatch: ["**/*.test.ts?(x)", "**/__fixtures__/*.test.ts?(x)"],
+  setupFiles: ["<rootDir>/config/tests/jest/setup-tests.ts"],
   setupFilesAfterEnv: ["<rootDir>/config/tests/jest/test-env-setup.ts"],
   testEnvironment: "jsdom",
   globals: {
