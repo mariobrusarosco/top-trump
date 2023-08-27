@@ -9,6 +9,7 @@ import App from "./App";
 import { SignInScreen } from "./domain/authorization/screens/sign-in";
 import { AuthenticatedLayout } from "./domain/authorization/layouts/authenticated-layout";
 import { LandingScreen } from "./domain/landing";
+import { DashboardScreen } from "./domain/dashboard/screens";
 
 const router = createBrowserRouter([
   {
@@ -19,14 +20,18 @@ const router = createBrowserRouter([
     element: <AuthenticatedLayout />,
     children: [
       {
-        path: "/sign-in",
-        element: <SignInScreen />,
-      },
-      {
-        path: "/sign-up",
-        element: <SignInScreen />,
+        path: "/dashboard",
+        element: <DashboardScreen />,
       },
     ]
+  },
+  {
+    path: "/sign-in",
+    element: <SignInScreen />,
+  },
+  {
+    path: "/sign-up",
+    element: <SignInScreen />,
   },
   {
     path: "/intro",

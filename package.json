@@ -11,6 +11,7 @@
     "test:jest": "DOTENV_CONFIG_PATH=.test.env jest --config config/tests/jest/jest.config.ts --setupFiles dotenv/config"
   },
   "dependencies": {
+    "framer-motion": "^10.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0"
