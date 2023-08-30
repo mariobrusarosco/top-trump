@@ -2,13 +2,13 @@ interface Props {
   children: React.ReactNode;
 }
 
-const ProtectedLayout = ({ children }: Props) => {
+const PublicLayout = ({ children }: Props) => {
   return (
     <div className="h-full">
-      <i>under protected layout</i>
+      <i>under public layout</i>
       {children}
     </div>
   );
 };
 
-export default ProtectedLayout;
+export default PublicLayout;
