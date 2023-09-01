@@ -11,6 +11,7 @@ export default async function Home() {
   const server = await db.server.findFirst({
     where: { members: { some: { profileId: profile.id } } },
   });
+  console.log({ profile });
 
   if (server) redirect(`/servers/${server.id}`);
 
