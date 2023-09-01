@@ -52,25 +52,24 @@ export const CreateServerModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      debugger;
       await axios.post("/api/servers", values);
 
       form.reset();
       router.refresh();
-      window.location.reload();
+      onClose();
     } catch (error) {
       console.error(error);
     }
   };
 
-  const isCreeateModalOpen = isOpen && type === "createServer";
+  const isCreateModalOpen = isOpen && type === "createServer";
   const handleModalClose = () => {
     form.reset();
     onClose();
   };
 
   return (
-    <Dialog open={isCreeateModalOpen} onOpenChange={handleModalClose}>
+    <Dialog open={isCreateModalOpen} onOpenChange={handleModalClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">

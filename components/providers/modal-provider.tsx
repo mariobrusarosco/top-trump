@@ -7,7 +7,7 @@ export const ModalProvider = () => {
   const [isMounted, setisMounted] = useState(false);
 
   useEffect(() => {
-    setisMounted(false);
+    setisMounted(true);
   }, []);
 
   if (!isMounted) return null;
