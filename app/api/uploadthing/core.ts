@@ -14,7 +14,7 @@ const handleAuth = () => {
 export const ourFileRouter = {
   serverImage: f({
     image: {
-      maxFileSize: "4MB",
+      maxFileSize: "256KB",
       maxFileCount: 1,
     },
   })

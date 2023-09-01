@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import axios from "axios";
 import {
   Dialog,
   DialogContent,
@@ -35,6 +37,7 @@ const formSchema = z.object({
 });
 
 export const InitialModal = () => {
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -47,7 +50,16 @@ export const InitialModal = () => {
   const formIsLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
+    try {
+      debugger;
+      await axios.post("/api/servers", values);
+
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -78,7 +90,9 @@ export const InitialModal = () => {
                   name="imageUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Image Upload</FormLabel>
+                      <FormLabel className="uppercase text-xs font-bold text-red-500 dark:text-black">
+                        Image Upload
+                      </FormLabel>
                       <FormControl>
                         <FileUpload
                           endpoint="serverImage"
