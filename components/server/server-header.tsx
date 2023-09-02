@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useModal } from "@/hooks/use-modal-store";
+import { use, useEffect, useState } from "react";
 
 interface Props {
   server: ServerWithMembersWithProfile;
@@ -32,6 +33,14 @@ export const ServerHeader = ({ server, role }: Props) => {
   const { onOpen } = useModal();
   const isAdmin = role === MemberRole.ADMIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
 
   return (
     <DropdownMenu>

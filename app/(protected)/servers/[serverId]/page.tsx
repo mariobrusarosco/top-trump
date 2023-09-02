@@ -1,5 +1,3 @@
-const ServerScreen = () => {
-  return <section>Servers</section>;
-};
-
-export default ServerScreen;
+export default function Page() {
+  return <div>Servers</div>;
+}
