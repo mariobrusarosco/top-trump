@@ -34,7 +34,6 @@ export const DeleteServerModal = () => {
       );
 
       onClose();
-      // router.refresh();
       router.push("/");
     } catch (error) {
     } finally {
