@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     const { name, imageUrl } = await req.json();
     const profile = await currentProfile();
 
-    if (!profile) return new NextResponse("[INTERNAL ERROR]", { status: 404 });
+    if (!profile) return new NextResponse("[UNAUTHORIZED]", { status: 404 });
 
     const server = await db.server.create({
       data: {

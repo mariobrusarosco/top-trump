@@ -5,6 +5,7 @@ import { InviteModal } from "@/components/modals/invite-modal";
 import { useEffect, useState } from "react";
 import ManageServerModal from "../modals/manage-server";
 import { ManageMembersModal } from "../modals/manage-members-modal";
+import { CreateChannelModal } from "../modals/create-channel-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setisMounted] = useState(false);
@@ -17,6 +18,7 @@ export const ModalProvider = () => {
 
   return (
     <>
+      <CreateChannelModal />
       <ManageMembersModal />
       <CreateServerModal />
       <ManageServerModal />
