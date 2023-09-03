@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useModal } from "@/hooks/use-modal-store";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   server: ServerWithMembersWithProfile;
@@ -62,7 +62,10 @@ export const ServerHeader = ({ server, role }: Props) => {
         )}
 
         {isAdmin && (
-          <DropdownMenuItem className="flex items-center text-cyan-300 px-3 py-2 text-sm cursor-pointer">
+          <DropdownMenuItem
+            onClick={() => onOpen("manageServer", { server })}
+            className="flex items-center text-cyan-300 px-3 py-2 text-sm cursor-pointer"
+          >
             Server Settings
             <Settings className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>
@@ -91,7 +94,7 @@ export const ServerHeader = ({ server, role }: Props) => {
         )}
 
         {!isAdmin && (
-          <DropdownMenuItem className="flex items-center text-green px-3 py-2 text-sm cursor-pointer">
+          <DropdownMenuItem className="flex items-center text-emerald-500 px-3 py-2 text-sm cursor-pointer">
             Leave Server
             <LogOut className="w-4 h-4 ml-auto" />
           </DropdownMenuItem>

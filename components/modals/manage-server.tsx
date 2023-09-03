@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect, useState } from "react";
 import FileUpload from "@/components/file-upload";
 import { useModal } from "@/hooks/use-modal-store";
 
@@ -36,8 +37,8 @@ const formSchema = z.object({
   }),
 });
 
-export const CreateServerModal = () => {
-  const { isOpen, onClose, type } = useModal();
+const ManageServerModal = () => {
+  const { isOpen, onClose, type, data: modalData } = useModal();
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -49,26 +50,34 @@ export const CreateServerModal = () => {
 
   const formIsLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await axios.post("/api/servers", values);
-
-      form.reset();
-      router.refresh();
-      onClose();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const isCreateModalOpen = isOpen && type === "createServer";
+  const isManageModalOpen = isOpen && type === "manageServer";
   const handleModalClose = () => {
     form.reset();
     onClose();
   };
 
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.patch(
+        `/api/servers/${modalData.server?.id}`,
+        values
+      );
+
+      form.reset();
+      router.refresh();
+      onClose();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    form.setValue("name", modalData.server?.name ?? "");
+    form.setValue("imageUrl", modalData.server?.imageUrl ?? "");
+  }, [modalData.server, form]);
+
   return (
-    <Dialog open={isCreateModalOpen} onOpenChange={handleModalClose}>
+    <Dialog open={isManageModalOpen} onOpenChange={handleModalClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
@@ -127,7 +136,7 @@ export const CreateServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={formIsLoading}>
-                Create
+                Update
               </Button>
             </DialogFooter>
           </form>
@@ -136,3 +145,5 @@ export const CreateServerModal = () => {
     </Dialog>
   );
 };
+
+export default ManageServerModal;
