@@ -2,15 +2,35 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-interface PatchParams {
-  imageurl: string;
-  name: string;
+interface DeleteParams {
+  serverId: string;
 }
 
-export async function PATCH(
+export async function DELETE(
   req: Request,
-  { params }: { params: { serverId: string } }
+  { params }: { params: DeleteParams }
 ) {
+  try {
+    const profile = await currentProfile();
+    console.log("profile:", profile);
+
+    if (!profile) return new NextResponse("[UNAUTHORIZED]", { status: 401 });
+
+    const updatedServer = await db.server.deleteMany({
+      where: { id: params.serverId, profileId: profile.id },
+    });
+
+    return NextResponse.json(updatedServer);
+  } catch (error) {
+    return new NextResponse("[serverId PATCH]", { status: 500 });
+  }
+}
+
+interface PatchParams {
+  serverId: string;
+}
+
+export async function PATCH(req: Request, { params }: { params: PatchParams }) {
   try {
     const profile = await currentProfile();
 
@@ -30,6 +50,4 @@ export async function PATCH(
   } catch (error) {
     return new NextResponse("[serverId PATCH]", { status: 500 });
   }
-
-  return NextResponse.json({ name: "nada ne" });
 }
