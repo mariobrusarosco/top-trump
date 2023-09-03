@@ -17,7 +17,7 @@ import {
   CommandGroup,
   CommandItem,
 } from "../ui/command";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   data: {
@@ -49,6 +49,18 @@ export const RoleMapper = {
 
 export const ServerSearch = ({ data }: Props) => {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   return (
     <div className="px-2">
