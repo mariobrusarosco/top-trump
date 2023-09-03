@@ -19,7 +19,7 @@ export default async function Home() {
   return (
     <div className="flex">
       <p className="text-3xl font-bold text--300">Top trump</p>
-      {/* <InitialModal /> */}
+      <InitialModal />
       {/* <button>create server</button>   */}
       <UserButton />
       <ModeToggle />

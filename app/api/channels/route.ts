@@ -13,6 +13,8 @@ export async function POST(req: Request, params: PostParams) {
     const serverId = searchParams.get("serverId") ?? "";
     const profile = await currentProfile();
 
+    console.log({ profile });
+
     if (!profile) return new NextResponse("[UNAUTHORIZED]", { status: 404 });
 
     if (name === "general")
