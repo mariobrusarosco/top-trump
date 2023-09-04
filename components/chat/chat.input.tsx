@@ -42,7 +42,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         query,
       });
 
-      await axios.post(url, { ...values, fileUrl: "mocked" });
+      await axios.post(url, { ...values, fileUrl: "" });
 
       form.reset();
       router.refresh();
