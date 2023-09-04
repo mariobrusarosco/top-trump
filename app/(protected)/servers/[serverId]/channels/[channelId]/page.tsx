@@ -1,4 +1,5 @@
 import ChatHeader from "@/components/chat/chat-header";
+import { ChatInput } from "@/components/chat/chat.input";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
@@ -30,12 +31,21 @@ const ChannelIdScreen = async ({ params }: Props) => {
   }
 
   return (
-    <div className="bg-white dark:bg-red-800 flex flex-col h-full">
+    <div className="bg-white dark:bg-red-800 flex flex-col h-full justify-between">
       <ChatHeader
         name="a"
         serverId={params.serverId}
         type="channel"
         imageurl=""
+      />
+      <ChatInput
+        name={channel.name}
+        type="channel"
+        apiUrl="/api/socket/messages"
+        query={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
       />
     </div>
   );
