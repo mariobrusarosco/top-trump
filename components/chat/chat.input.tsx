@@ -9,6 +9,7 @@ import { Plus } from "lucide-react";
 import { Input } from "../ui/input";
 import qs from "query-string";
 import axios from "axios";
+import { EmojiPicker } from "../emoji-picker";
 
 interface ChatInputProps {
   apiUrl: string;
@@ -60,7 +61,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
               <FormControl>
                 <div className="relative p-4 pb-6">
                   <button
-                    onClick={() => {}}
+                    onClick={() => onOpen("messageFile", { apiUrl, query })}
                     className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
                     type="button"
                     disabled={isLoading}
@@ -76,11 +77,11 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     {...field}
                   />
                   <div className="absolute top-7 right-8">
-                    {/* <EmojiPicker
-                        onChange={(emoji: string) =>
-                          field.onChange(`${field.value} ${emoji}`)
-                        }
-                      /> */}
+                    <EmojiPicker
+                      onChange={(emoji: string) =>
+                        field.onChange(`${field.value} ${emoji}`)
+                      }
+                    />
                   </div>
                 </div>
               </FormControl>
