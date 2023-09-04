@@ -7,13 +7,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponseServerIo
 ) {
-  if (req.method === "POST") {
-    return res.status(405).json({ error: "POST method not allowed" });
-  }
+  //   if (req.method !== "DELETE" && req.method !== "PATCH") {
+  //     return res.status(405).json({ error: "Method not allowed" });
+  //   }
 
   try {
     const profile = await currentProfilePages(req);
-    const { content, fileurl } = req.body;
+    const { content, fileUrl } = req.body;
     const { serverId, channelId } = req.query;
 
     if (!profile) {
@@ -63,18 +63,30 @@ export default async function handler(
       return res.status(404).json({ message: "Member not found" });
     }
 
+    console.log(
+      "------pre message creation",
+      channelId,
+      member.id,
+      content,
+      fileUrl
+    );
     const message = await db.message.create({
       data: {
         content,
-        fileurl,
+        fileUrl,
         channelId: channelId as string,
         memberId: member.id,
       },
-      include: { member: { include: { profile: true } } },
+      include: {
+        member: {
+          include: {
+            profile: true,
+          },
+        },
+      },
     });
 
     const channelkey = `chat:${channel.id}:messages`;
-
     res?.socket?.server?.io?.emit(channelkey, message);
 
     return res.status(200).json(message);

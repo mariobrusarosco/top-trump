@@ -41,9 +41,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
         query,
       });
 
-      debugger;
-
-      await axios.post(url, values);
+      await axios.post(url, { ...values, fileUrl: "mocked" });
 
       form.reset();
       router.refresh();
@@ -70,12 +68,12 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     <Plus className="h-4 w-4" />
                   </button>
                   <Input
-                    {...field}
                     placeholder={`message ${
                       type === "conversation" ? name : "#" + name
                     }`}
                     disabled={isLoading}
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                    {...field}
                   />
                   <div className="absolute top-7 right-8">
                     {/* <EmojiPicker
