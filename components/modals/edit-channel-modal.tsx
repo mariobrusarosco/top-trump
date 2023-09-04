@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import {
   Dialog,
@@ -48,38 +48,38 @@ const formSchema = z.object({
   type: z.nativeEnum(ChannelType),
 });
 
-export const CreateChannelModal = () => {
+export const EditChannelModal = () => {
   const { isOpen, onClose, type, data: modalData } = useModal();
   const router = useRouter();
-  const params = useParams();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: modalData.channelType || ChannelType.TEXT,
+      type: modalData?.channel?.type,
     },
   });
 
   useEffect(() => {
-    if (modalData.channelType) {
-      form.setValue("type", modalData.channelType);
-    } else {
-      form.setValue("type", ChannelType.TEXT);
+    if (modalData.channel) {
+      form.setValue("name", modalData.channel.name);
+      form.setValue("type", modalData.channel.type);
     }
-  }, []);
+  }, [form, modalData.channel]);
 
   const formIsLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: "/api/channels",
+        url: `/api/channels/${modalData.channel?.id}/`,
         query: {
-          serverId: params?.serverId,
+          serverId: modalData?.server?.id,
         },
       });
 
-      await axios.post(url, values);
+      console.log({ url });
+
+      await axios.patch(url, values);
 
       form.reset();
       router.refresh();
@@ -89,18 +89,18 @@ export const CreateChannelModal = () => {
     }
   };
 
-  const isCreateModalOpen = isOpen && type === "createChannel";
+  const isEditModalOpen = isOpen && type === "editChannel";
   const handleModalClose = () => {
     form.reset();
     onClose();
   };
 
   return (
-    <Dialog open={isCreateModalOpen} onOpenChange={handleModalClose}>
+    <Dialog open={isEditModalOpen} onOpenChange={handleModalClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create channel
+            Edit channel
           </DialogTitle>
           <DialogDescription>
             Give your channel a name. Don&apos;t worry, you can change it later
