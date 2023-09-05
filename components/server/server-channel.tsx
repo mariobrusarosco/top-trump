@@ -48,7 +48,7 @@ export const ServerChannel = ({ channel, role, server }: Props) => {
       <p
         className={cn(
           "line-clamp-1 text-sm text-red-700 dark:text-rose-100",
-          params.channeId === channel.id && "text-emerald-800"
+          params?.channeId === channel.id && "text-emerald-800"
         )}
       >
         {channel.name}

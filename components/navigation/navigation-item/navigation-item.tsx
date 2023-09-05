@@ -15,7 +15,7 @@ export const NavigationItem = ({ id, imageUrl, name }: Props) => {
   const params = useParams();
   const router = useRouter();
 
-  const isItemActive = id == params.serverId;
+  const isItemActive = id == params?.serverId;
 
   const stylesForDefaultState = "group-hover:h-[20px] h-[8px]";
   const stylesForActiveState = "h-[36px]";
