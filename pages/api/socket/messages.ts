@@ -17,7 +17,8 @@ export default async function handler(
     const { serverId, channelId } = req.query;
 
     if (!profile) {
-      return res.status(401).json({ message: "[UNAUTHORIZED]" });
+      console.log("---UNAUTHORIZED--- ");
+      // return res.status(401).json({ message: "[UNAUTHORIZED]" });
     }
 
     if (!content) {
@@ -33,7 +34,7 @@ export default async function handler(
     const server = await db.server.findFirst({
       where: {
         id: serverId as string,
-        members: { some: { profileId: profile.id } },
+        members: { some: { profileId: profile?.id } },
       },
       include: {
         members: true,
@@ -56,20 +57,13 @@ export default async function handler(
     }
 
     const member = server.members.find(
-      (member) => member.profileId === profile.id
+      (member) => member.profileId === profile?.id
     );
 
     if (!member) {
       return res.status(404).json({ message: "Member not found" });
     }
 
-    console.log(
-      "------pre message creation",
-      channelId,
-      member.id,
-      content,
-      fileUrl
-    );
     const message = await db.message.create({
       data: {
         content,
@@ -89,6 +83,11 @@ export default async function handler(
     const channelkey = `chat:${channel.id}:messages`;
     res?.socket?.server?.io?.emit(channelkey, message);
 
+    console.log("------message", channelId, member.id, content);
+    // console.log("------channelkey", channelkey);
+
+    const channelkeyTet = `toma`;
+    console.log("------socket Test", channelkeyTet);
     return res.status(200).json(message);
   } catch (error) {
     return res.status(500).json({ message: "[MESSAGES] internal error" });

@@ -4,6 +4,7 @@ import { ChatWelcome } from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
 import { Fragment } from "react";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 type MessageWithMemberWithProfile = Message & {
   member: Member & {
@@ -23,6 +24,7 @@ interface Props {
   type: "channel" | "conversation";
 }
 
+const justAFetch = () => {};
 export const ChatMessages = ({
   apiUrl,
   chatId,
@@ -35,8 +37,12 @@ export const ChatMessages = ({
   type,
 }: Props) => {
   const queryKey = `chat:${chatId}`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:messages:update`;
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({ paramKey, paramValue, queryKey, apiUrl });
+
+  useChatSocket({ queryKey, addKey, updateKey });
 
   if (status === "loading") {
     return (
@@ -63,6 +69,7 @@ export const ChatMessages = ({
   return (
     <div className="flex-1 flex flex-col py-4 overflow-y-auto">
       <div className="flex-1" />
+      <button>tests</button>
       <ChatWelcome name={name} type={type} />
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
