@@ -2,13 +2,17 @@ interface Props {
   children: React.ReactNode;
 }
 
+import { TableSidebar } from "@/domains/tables/components/sidebar";
+import { AppSidebar } from "@/domains/shared/components/app-sidebar";
+
 const ProtectedLayout = ({ children }: Props) => {
   return (
-    <div className="h-full">
-      <div className="md:flex hidden h-full w-[72px] z-30 flex-col fixed inset-y-0">
-        {/* <NavigationSidebar></NavigationSidebar> */}
-      </div>
-      <main className="md:pl-[72px] h-full">{children}</main>
+    <div className="grid grid-cols-12 h-full">
+      <AppSidebar />
+      <TableSidebar />
+      <main className="container col-span-8 lg:col-span-9 bg-red-200">
+        {children}
+      </main>
     </div>
   );
 };
