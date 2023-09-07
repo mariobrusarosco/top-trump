@@ -1,13 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { cn } from "@/lib/utils";
-import { ModalProvider } from "@/components/providers/modal-provider";
-import { SocketProvider } from "@/components/providers/socket-provider";
-import { QueryProvider } from "@/components/providers/query-provider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ClerkProvider } from "@clerk/nextjs";
+// import { ThemeProvider } from "@/components/providers/theme-provider";
+// // import { cn } from "@/lib/utils";
+// import { ModalProvider } from "@/components/providers/modal-provider";
+// import { SocketProvider } from "@/components/providers/socket-provider";
+// import { QueryProvider } from "@/components/providers/query-provider";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const font = Quicksand({ subsets: ["latin"] });
 
@@ -22,10 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={cn(font.className, "dark:bg-[#BB2253]")}>
-          <ThemeProvider
+    // <ClerkProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={font.className}>
+        {/* <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem={false}
@@ -35,14 +35,14 @@ export default function RootLayout({
               <ModalProvider />
               <QueryProvider>
                 <>
-                  <ReactQueryDevtools initialIsOpen={false} />
-                  {children}
-                </>
+                  <ReactQueryDevtools initialIsOpen={false} /> */}
+        {children}
+        {/* </>
               </QueryProvider>
             </SocketProvider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          </ThemeProvider> */}
+      </body>
+    </html>
+    // </ClerkProvider>
   );
 }
