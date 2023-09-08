@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
-// import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 // import { ThemeProvider } from "@/components/providers/theme-provider";
 // // import { cn } from "@/lib/utils";
 // import { ModalProvider } from "@/components/providers/modal-provider";
@@ -22,10 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // <ClerkProvider>
-    <html lang="en" suppressHydrationWarning>
-      <body className={font.className}>
-        {/* <ThemeProvider
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={font.className}>
+          {/* <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem={false}
@@ -36,13 +36,13 @@ export default function RootLayout({
               <QueryProvider>
                 <>
                   <ReactQueryDevtools initialIsOpen={false} /> */}
-        {children}
-        {/* </>
+          {children}
+          {/* </>
               </QueryProvider>
             </SocketProvider>
           </ThemeProvider> */}
-      </body>
-    </html>
-    // </ClerkProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
