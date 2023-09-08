@@ -11,3 +11,13 @@ datasource db {
   relationMode = "prisma"
 }
 
+
+model Member {
+  id String @id @default(uuid())
+  userId String @unique
+  firstName String
+  lastName String
+  email String @unique
+  profileImageUrl String @db.Text
+  lastSignInAt BigInt
+}
