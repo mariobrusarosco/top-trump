@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
-import { SocketProvider } from "@/domains/communication-channels/providers/socket-provider";
+// import { SocketProvider } from "@/domains/communication-channels/providers/socket-provider";
 // import { ThemeProvider } from "@/components/providers/theme-provider";
 // // import { cn } from "@/lib/utils";
 // import { ModalProvider } from "@/components/providers/modal-provider";
