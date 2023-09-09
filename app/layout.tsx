@@ -2,6 +2,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
+import { AppLoaderScreen } from "@/domains/shared/components/app-loader-screen";
+import { AuthenticationProvider } from "@/domains/auth/providers/auth-provider";
+import { MemberContainer } from "@/domains/member/container/member-container";
+import { Member } from "@prisma/client";
 // import { SocketProvider } from "@/domains/communication-channels/providers/socket-provider";
 // import { ThemeProvider } from "@/components/providers/theme-provider";
 // // import { cn } from "@/lib/utils";
@@ -38,9 +42,17 @@ export default function RootLayout({
                 <>
                   <ReactQueryDevtools initialIsOpen={false} /> */}
           <ClerkLoading>
-            <div>Clerk is loading</div>
+            <AppLoaderScreen />
           </ClerkLoading>
-          <ClerkLoaded>{children}</ClerkLoaded>
+          <ClerkLoaded>
+            <MemberContainer>
+              {(member: Member) => (
+                <AuthenticationProvider member={member}>
+                  {children}
+                </AuthenticationProvider>
+              )}
+            </MemberContainer>
+          </ClerkLoaded>
           {/* </>
               </QueryProvider>
             </SocketProvider>

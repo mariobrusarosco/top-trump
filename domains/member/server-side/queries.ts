@@ -2,6 +2,7 @@ import { SharedRoutes } from "@/domains/shared/typing/enums-interfaces";
 import { db } from "@/server-side/db/prisma";
 import { User, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 const createMember = async () => {
   const authenticatedMember = await currentUser();
@@ -32,7 +33,7 @@ const createMember = async () => {
   }
 };
 
-const fetchMember = async () => {
+const fetchMember = cache(async () => {
   const authenticatedMember = await currentUser();
 
   if (authenticatedMember === null) return null;
@@ -40,7 +41,7 @@ const fetchMember = async () => {
   return await db.member.findUnique({
     where: { userId: authenticatedMember.id },
   });
-};
+});
 
 export const MemberQueries = {
   createMember,
