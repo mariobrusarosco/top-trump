@@ -14,15 +14,12 @@ import { redirect } from "next/navigation";
 import { db } from "@/server-side/db/prisma";
 import { AuthRoutes } from "@/domains/auth/typing/enums-interfaces";
 import { getMemberById } from "@/domains/auth/server-side/queries";
+import { MemberQueries } from "@/domains/member/server-side/queries";
 
 const ProtectedLayout = async ({ children }: Props) => {
-  const authenticatedMember = await currentUser();
+  const member = await MemberQueries.fetchMember();
 
-  if (!authenticatedMember) return redirectToSignIn();
-
-  const member = await getMemberById(authenticatedMember.id);
-
-  if (!member) return redirect(AuthRoutes.REGISTER);
+  if (member === null) return redirect(AuthRoutes.REGISTER);
 
   return (
     <div className="grid grid-cols-12 h-full">

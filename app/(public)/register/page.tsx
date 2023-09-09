@@ -1,24 +1,24 @@
-import { createMember } from "@/domains/member/server-side/member-creation";
-import { SharedRoutes } from "@/domains/shared/typing/enums-interfaces";
-import { currentUser } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { MemberQueries } from "@/domains/member/server-side/queries";
+import Link from "next/link";
 
 const RegisterScreen = async () => {
-  const memberAuthData = await currentUser();
+  const member = await MemberQueries.fetchMember();
 
-  if (memberAuthData !== null) {
-    await createMember(memberAuthData);
-
-    return redirect(SharedRoutes.HOME);
+  if (member !== null) {
+    return (
+      <div>
+        You´ve aleady registed on our app. Go to <Link href={"/"}>home</Link>
+      </div>
+    );
   }
 
-  // TODO [logging] add a logging layer here
-  console.log(
-    "[ERROR] - [MEMBER] - [RegisterScreen]",
-    "member has acessed 'Register' screen with no auth"
-  );
+  await MemberQueries.createMember();
 
-  return redirect(SharedRoutes.NOT_FOUND);
+  return (
+    <div>
+      You are now registed on our app. Go to <Link href={"/"}>home</Link>
+    </div>
+  );
 };
 
 export default RegisterScreen;
