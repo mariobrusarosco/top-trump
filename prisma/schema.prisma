@@ -19,5 +19,4 @@ model Member {
   lastName String
   email String @unique
   profileImageUrl String @db.Text
-  lastSignInAt BigInt
 }
